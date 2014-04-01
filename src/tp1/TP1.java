@@ -46,15 +46,15 @@ public class TP1 {
     public static double[] signalEnergy(int m,int N){
         int signalLenghtMs = signal.getSignalLength() * 1000 / signal.getSamplingFrequency();
         int nb_fenetre = signalLenghtMs/N;
-        System.out.println("nb_fenetre : "+nb_fenetre);
+//        System.out.println("nb_fenetre : "+nb_fenetre);
         double[] nrjs = new double[nb_fenetre];
         int taille_fenetre_tab = N * signal_tab.length / signalLenghtMs;
         int taille_decalage_tab = m * signal_tab.length / signalLenghtMs;
         int i_fenetre = 0;
         int j = 0 ;
         while(i_fenetre < nb_fenetre){
-            System.out.println(""+i_fenetre);
-            System.out.println("j : "+j);
+//            System.out.println(""+i_fenetre);
+//            System.out.println("j : "+j);
             int bornesup = taille_decalage_tab * i_fenetre + taille_fenetre_tab;
             while(j < bornesup){
                 // on calcul l'énergie
@@ -69,11 +69,12 @@ public class TP1 {
 
 
     private static double computeEnergy(int n, int nw){
-        double somme = 0;
+        double somme = 0.;
         for (int k = -nw/2; k < nw/2; k++) {
             somme += Math.pow(signal_tab[n+k],2);
         }
-        somme *= (1/(nw+1));
+        somme *= (1./(nw+1.));
+//        System.out.println("somme : "+somme);
         return somme;
     }
 }
