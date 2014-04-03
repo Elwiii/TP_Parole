@@ -1,5 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+
+* To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -11,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import Graphe.*;
 /**
  *
  * @author nikolai
@@ -31,6 +33,8 @@ public class TP1 {
                 System.out.println(i+" : "+energies[i]);
                 
             }
+            
+            Graphe g1 = new Graphe(energies, 176, "Energies", "");
             System.out.println("energies : "+energies);
             System.out.println("Length of the signal (in sample) : " + signal.getSignalLength());
             System.out.println("Sampling frequency : " + signal.getSamplingFrequency());
@@ -74,6 +78,7 @@ public class TP1 {
             somme += Math.pow(signal_tab[n+k],2);
         }
         somme *= (1./(nw+1.));
+        
 //        System.out.println("somme : "+somme);
         return somme;
     }
