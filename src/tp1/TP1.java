@@ -34,7 +34,7 @@ public class TP1 {
                 
             }
             
-            Graphe g1 = new Graphe(energies, 176, "Energies", "");
+            Graphe g1 = new Graphe(energies, 8, "Energies", "");
             System.out.println("energies : "+energies);
             System.out.println("Length of the signal (in sample) : " + signal.getSignalLength());
             System.out.println("Sampling frequency : " + signal.getSamplingFrequency());

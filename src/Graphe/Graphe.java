@@ -13,29 +13,13 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.DefaultXYDataset;
 
-/**
- * VueCourbe
- * @author Tristan
- */
 public class Graphe extends JFrame {
-    
-    
-    //////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    ///////////////////////////// VARIABLES ///////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////
-    
     
     protected String _titre;
     protected String _legende;
     protected int _pas;
     protected double[] _tab;
-    protected ChartPanel _chartPanel;
-    
-    
-    //////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    //////////////////////////// CONSTRUCTEUR /////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////
-    
+    protected ChartPanel _chartPanel;    
     
     public Graphe(double[] tab, int pas, String titre, String legende) {
         
@@ -61,13 +45,7 @@ public class Graphe extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-    } // Graphe(double[] tab, int pas)
-    
-    
-    //////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    ///////////////////////////// FONCTIONS ///////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////
-    
+    } 
     
     /**
      * Met a jour le graph des resultats
@@ -81,7 +59,7 @@ public class Graphe extends JFrame {
         this._chartPanel.setChart(chart);
         this.repaint();
         
-    } // paintComponent(Graphics g)
+    }
     
     
     /**
@@ -113,8 +91,7 @@ public class Graphe extends JFrame {
         
         return dataset;
         
-    } // updateData()
-    
+    }     
     
     /**
      * Cree la courbe
@@ -138,7 +115,5 @@ public class Graphe extends JFrame {
       
       return chart;
         
-    } // createChart(PieDataset dataset, String title)
-    
-    
-} // Graphe
+    }   
+}
