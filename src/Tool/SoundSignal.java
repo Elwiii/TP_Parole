@@ -1,4 +1,4 @@
-package tp1;
+package Tool;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -24,7 +24,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class SoundSignal {
 
     private AudioInputStream stream;
-        private short[] signal;
+    private short[] signal;
     private int samplingFrequency;
 
     /**

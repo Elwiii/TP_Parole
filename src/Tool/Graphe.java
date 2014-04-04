@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package Graphe;
+package Tool;
 
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -18,10 +19,10 @@ public class Graphe extends JFrame {
     protected String _titre;
     protected String _legende;
     protected int _pas;
-    protected double[] _tab;
+    protected ArrayList<Double> _tab;
     protected ChartPanel _chartPanel;    
     
-    public Graphe(double[] tab, int pas, String titre, String legende) {
+    public Graphe(ArrayList<Double> tab, int pas, String titre, String legende) {
         
         this._titre = titre;
         this._legende = legende;
@@ -68,21 +69,21 @@ public class Graphe extends JFrame {
      */
     protected DefaultXYDataset getData() {
         
-        double[][] yValues = new double[2][this._tab.length];
-        double[][] xValues = new double[2][this._tab.length];
+        double[][] yValues = new double[2][this._tab.size()];
+        double[][] xValues = new double[2][this._tab.size()];
 
         // X values
-        for (int i=0; i<this._tab.length; i++)
+        for (int i=0; i<this._tab.size(); i++)
         {
            yValues[0][i] = Double.valueOf(i*this._pas);
            xValues[0][i] = Double.valueOf(i*this._pas);
         }
 
         // Y values
-        for (int i=0; i<this._tab.length; i++)
+        for (int i=0; i<this._tab.size(); i++)
         {
-           yValues[1][i] = Double.valueOf(this._tab[i]);
-           xValues[1][i] = Double.valueOf(this._tab[i]);
+           yValues[1][i] = Double.valueOf(this._tab.get(i));
+           xValues[1][i] = Double.valueOf(this._tab.get(i));
         }
 
         DefaultXYDataset dataset = new DefaultXYDataset();

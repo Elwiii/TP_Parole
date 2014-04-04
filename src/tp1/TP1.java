@@ -21,7 +21,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class TP1 extends IterateurSignal {
 
-    private static short[] signal_tab;
     private static SoundSignal signal;
     private static ArrayList<Double> energies;
 
@@ -42,6 +41,7 @@ public class TP1 extends IterateurSignal {
             signal = new SoundSignal();
             signal.setSignal("test_seg.wav");
             signal_tab = signal.getSignal();
+            energies = new ArrayList<>();
 
         } catch (UnsupportedAudioFileException ex) {
             Logger.getLogger(TP1.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,9 +79,9 @@ public class TP1 extends IterateurSignal {
 //        }
 //        return nrjs;
 //    }
-    private static double computeEnergy(int instant_echt, int N) {
+    private double computeEnergy(int instant_echt, int N) {
         double somme = 0.;
-        for (int k = -N / 2; k < N / 2; k++) {
+        for (int k = 0; k < N ; k++) {
             somme += Math.pow(signal_tab[instant_echt + k], 2);
         }
         somme *= (1. / (N + 1.));
