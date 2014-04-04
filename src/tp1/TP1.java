@@ -52,7 +52,7 @@ public class TP1 extends IterateurSignal {
 
     @Override
     public void toIterate(int debut_fenetre_ech, int fin_fenetre_ech, int indice_fenetre) {
-        //nrjs[i_fenetre]=computeEnergy(j,i_fenetre);
+//        System.out.println("indice_f : "+indice_fenetre);
         energies.add(computeEnergy(debut_fenetre_ech,wsize_ech ));
     }
 

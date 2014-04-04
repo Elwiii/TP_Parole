@@ -15,9 +15,9 @@ public class IterateurSignal {
     protected int wsize_seconde;
     protected int stepsize_seconde;
     protected int frequence_echantillonage;
-    protected int wsize_ech ;
+    protected int wsize_ech;
     protected int stepsize_ech;
-    
+
     public IterateurSignal(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage) {
         this.wsize_seconde = wsize_seconde;
         this.stepsize_seconde = stepsize_seconde;
@@ -25,25 +25,29 @@ public class IterateurSignal {
         wsize_ech = wsize_seconde * frequence_echantillonage / 1000;
         stepsize_ech = stepsize_seconde * frequence_echantillonage / 1000;
     }
-    
-    
+
     public int iterate() {
         int debut_fenetre_ech = 0;
         int fin_fenetre_ech = wsize_ech;
         int indice_fenetre = 0;
         while (fin_fenetre_ech < signal_tab.length) {
             indice_fenetre++;
-            System.out.println("debut ech : "+debut_fenetre_ech+ " / fin ech : "+fin_fenetre_ech);
-//            for (int i = debut_fenetre_ech; i < fin_fenetre_ech; i++) {
-                toIterate(debut_fenetre_ech, fin_fenetre_ech, indice_fenetre);
-//            }
+            toIterate(debut_fenetre_ech, fin_fenetre_ech, indice_fenetre);
             debut_fenetre_ech += stepsize_ech;
             fin_fenetre_ech = debut_fenetre_ech + wsize_ech;
         }
         return indice_fenetre;
     }
 
-    public void toIterate(int debut_fenetre_ech,int fin_fenetre_ech,int indice_fenetre){
+    /**
+     * fonction à override fonction appellée au parcour de chaque fênetre du
+     * signal
+     *
+     * @param debut_fenetre_ech
+     * @param fin_fenetre_ech
+     * @param indice_fenetre
+     */
+    public void toIterate(int debut_fenetre_ech, int fin_fenetre_ech, int indice_fenetre) {
         // à override
     }
 
