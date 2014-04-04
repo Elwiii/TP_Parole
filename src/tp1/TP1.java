@@ -34,7 +34,7 @@ public class TP1 {
                 
             }
             
-            Graphe g1 = new Graphe(energies, 8, "Energies", "");
+            Graphe g1 = new Graphe(energies, 8, "Energie du signal en fonction du temps", "");
             System.out.println("energies : "+energies);
             System.out.println("Length of the signal (in sample) : " + signal.getSignalLength());
             System.out.println("Sampling frequency : " + signal.getSamplingFrequency());
@@ -81,5 +81,39 @@ public class TP1 {
         
 //        System.out.println("somme : "+somme);
         return somme;
+    }
+    
+    private double[] signalZeroRate(int m, int N){
+        int signalLenghtMs = signal.getSignalLength() * 1000 / signal.getSamplingFrequency();
+        int nb_fenetre = signalLenghtMs/N;
+//        System.out.println("nb_fenetre : "+nb_fenetre);
+        double[] nrjs = new double[nb_fenetre];
+        int taille_fenetre_tab = N * signal_tab.length / signalLenghtMs;
+        int taille_decalage_tab = m * signal_tab.length / signalLenghtMs;
+        int i_fenetre = 0;
+        int j = 0 ;
+        while(i_fenetre < nb_fenetre){
+//            System.out.println(""+i_fenetre);
+//            System.out.println("j : "+j);
+            int bornesup = taille_decalage_tab * i_fenetre + taille_fenetre_tab;
+            while(j < bornesup){
+                // on calcul l'énergie
+                nrjs[i_fenetre]=zeroRate(j,i_fenetre);
+                j++;
+            }
+            i_fenetre++;
+            j = taille_decalage_tab * i_fenetre;
+        }
+        return nrjs;        
+    }
+    private static double zeroRate(int n, int nw){
+        double somme = 0;
+        for (int k = -nw/2; k < nw/2; k++) {
+            somme += Math.abs(Math.signum(signal_tab[n+k]) - Math.signum(signal_tab[n+k-1]));
+        }
+        somme *= (1./(2*nw));
+        
+        return somme;
+        
     }
 }
