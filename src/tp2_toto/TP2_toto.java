@@ -23,13 +23,14 @@ public class TP2_toto extends IterateurSignal {
     
     public static SoundSignal ssignal;
     private static short[] signal_tab;
-    private static ArrayList<Double> fenetreHamming;
+    private static ArrayList<Double> signal_fenetre;
     
     public TP2_toto(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage) {
         super(wsize_seconde, stepsize_seconde, frequence_echantillonage);
         ssignal = new Tool.SoundSignal();
         ssignal.setSignal("test_seg.wav");
         signal_tab = ssignal.getSignal();
+        signal_fenetre = new ArrayList<>();
     }
     
     private static double[] fenetreHamming(int size){
@@ -41,34 +42,24 @@ public class TP2_toto extends IterateurSignal {
         }
         return hamming;
     }
-    
-    private static double[] fenetrageHamming(int start, int size){
-        double[] hamming = fenetreHamming(size);
-        double[] signal_fen = new double[size];
-        for (int i = 0; i < size; i++) {
-            signal_fen[i]= signal_tab[start + i]*hamming[i];
-        }
-        return signal_fen;
-    }
-    
     @Override
-    public void toIterate(int debut_fenetre_ech, int fin_fenetre_ech, int indice_fenetre) {
-        //nrjs[i_fenetre]=computeEnergy(j,i_fenetre);
-        fenetreHamming.add(fenetrageHamming(debut_fenetre_ech,wsize_ech ));
+    public void toIterate(int debut_fenetre_ech, int fin_fenetre_ech, int indice_fenetre){
+        double[] hamming = fenetreHamming(wsize_ech);
+        signal_fenetre.add(signal_tab[debut_fenetre_ech + indice_fenetre]*hamming[indice_fenetre]);
     }
+    
     public static void main(String[] args){
         TP2_toto tp2 = new TP2_toto(30, 8, 22050);
         tp2.iterate();
-        try {
+        try{
             
             ssignal = new SoundSignal();
             ssignal.setSignal("test_seg.wav");
             signal_tab = ssignal.getSignal();
-            double[] dsignal_modif = fenetrageHamming(176,780);
             /* Cast en short */
-            short[] signal_modif = new short[dsignal_modif.length];
+            short[] signal_modif = new short[signal_fenetre.size()];
             for (int i = 0; i < signal_modif.length; i++) {
-                signal_modif[i] = (short)dsignal_modif[i];
+                signal_modif[i] = (hort)signal_fenetre.get(i);
             }
             ssignal.setSignal(signal_modif, 22080);
             ssignal.exportSignal("test_toto.wav",true);
