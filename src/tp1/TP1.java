@@ -43,9 +43,7 @@ public class TP1 extends IterateurSignal {
             signal_tab = signal.getSignal();
             energies = new ArrayList<>();
 
-        } catch (UnsupportedAudioFileException ex) {
-            Logger.getLogger(TP1.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (UnsupportedAudioFileException | IOException ex) {
             Logger.getLogger(TP1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
