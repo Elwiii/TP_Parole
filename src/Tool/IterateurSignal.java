@@ -26,6 +26,11 @@ public class IterateurSignal {
         stepsize_ech = stepsize_seconde * frequence_echantillonage / 1000;
     }
 
+    /**
+     * appelle la fonction toIterate à chaque fenêtre du signal
+     * renvoi le nombre de fenêtre du signal
+     * @return 
+     */
     public int iterate() {
         int debut_fenetre_ech = 0;
         int fin_fenetre_ech = wsize_ech;
