@@ -18,20 +18,15 @@ import tp1.TP1;
  *
  * @author Thomas
  */
-public class TP2 extends IterateurSignal {
+public class Hamming extends IterateurSignal {
 
-    private static SoundSignal ssignal;
-//    private static short[] signal_tab;
-    private static ArrayList<Double> signal_fenetre;
+    private final double[] w_hamming;
+    private final double[] signal_hamming;
 
-    private final double[] hamming;
-    private static double[] signal_modif;
-
-    public TP2(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage, short[] sig){
+    public Hamming(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage, short[] sig) {
         super(wsize_seconde, stepsize_seconde, frequence_echantillonage, sig);
-        signal_fenetre = new ArrayList<>();
-        hamming = fenetreHamming(wsize_ech);
-        signal_modif = new double[signal_tab.length];
+        w_hamming = fenetreHamming(wsize_ech);
+        signal_hamming = new double[signal_tab.length];
     }
 
     private static double[] fenetreHamming(int size) {
@@ -47,33 +42,41 @@ public class TP2 extends IterateurSignal {
     @Override
     public void toIterate(int debut_fenetre_ech, int fin_fenetre_ech, int indice_fenetre) {
         for (int i = 0; i < wsize_ech; i++) {
-            double d = signal_tab[debut_fenetre_ech + i] * hamming[i];
-            signal_modif[debut_fenetre_ech + i] += d;
+            double d = signal_tab[debut_fenetre_ech + i] * w_hamming[i];
+            signal_hamming[debut_fenetre_ech + i] += d;
         }
     }
 
+    /**
+     *
+     * @return le signal d'entrée fenêtré avec Hamming
+     */
+    public short[] computeHammingSignal() {
+        iterate();
+        short[] new_sig = new short[signal_hamming.length];
+        for (int i = 0; i < new_sig.length; i++) {
+            new_sig[i] = (short) Math.round(signal_hamming[i] / 2.16);
+        }
+        return new_sig;
+    }
+
     public static void main(String[] args) {
-        ssignal = new SoundSignal();
+        SoundSignal ssignal = new SoundSignal();
         try {
             ssignal.setSignal("test_seg.wav");
         } catch (UnsupportedAudioFileException | IOException ex) {
-            Logger.getLogger(TP2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Hamming.class.getName()).log(Level.SEVERE, null, ex);
         }
         short[] sig = ssignal.getSignal();
 
-        TP2 tp2 = new TP2(32, 8, 22050, sig);
-        tp2.iterate();
+        Hamming tp2 = new Hamming(32, 8, 22050, sig);
 
-        short[] new_sig = new short[signal_modif.length];
-        for (int i = 0; i < new_sig.length; i++) {
-            new_sig[i] = (short) Math.round(signal_modif[i] / 2.16);
-        }
-        ssignal.setSignal(new_sig, 22050);
+        ssignal.setSignal(tp2.computeHammingSignal(), 22050);
+
         try {
             ssignal.exportSignal("test_toto.wav", true);
         } catch (IOException ex) {
-            Logger.getLogger(TP2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Hamming.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }
