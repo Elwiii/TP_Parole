@@ -7,12 +7,12 @@
 package tp2_toto;
 
 import Tool.IterateurSignal;
+import Tool.SoundSignal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import tp1.SoundSignal;
 import tp1.TP1;
 
 /**
@@ -21,16 +21,24 @@ import tp1.TP1;
  */
 public class TP2_toto extends IterateurSignal {
     
-    public static SoundSignal ssignal;
+   private static SoundSignal ssignal;
     private static short[] signal_tab;
     private static ArrayList<Double> signal_fenetre;
     
-    public TP2_toto(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage) {
+     public TP2_toto(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage) {
         super(wsize_seconde, stepsize_seconde, frequence_echantillonage);
-        ssignal = new Tool.SoundSignal();
-        ssignal.setSignal("test_seg.wav");
-        signal_tab = ssignal.getSignal();
-        signal_fenetre = new ArrayList<>();
+        try {
+
+            ssignal = new SoundSignal();
+            ssignal.setSignal("test_seg.wav");
+            signal_tab = ssignal.getSignal();
+            signal_fenetre = new ArrayList<Double>();
+
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(TP1.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TP1.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private static double[] fenetreHamming(int size){
@@ -59,7 +67,7 @@ public class TP2_toto extends IterateurSignal {
             /* Cast en short */
             short[] signal_modif = new short[signal_fenetre.size()];
             for (int i = 0; i < signal_modif.length; i++) {
-                signal_modif[i] = (hort)signal_fenetre.get(i);
+                signal_modif[i] = signal_fenetre.get(i);
             }
             ssignal.setSignal(signal_modif, 22080);
             ssignal.exportSignal("test_toto.wav",true);
