@@ -25,7 +25,14 @@ public class TP1 extends IterateurSignal {
     private static ArrayList<Double> energies;
 
     public static void main(String[] args) {
-        TP1 tp1 = new TP1(30, 8, 22050);
+
+        signal = new SoundSignal();
+        try {
+            signal.setSignal("test_seg.wav");
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            Logger.getLogger(TP1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        TP1 tp1 = new TP1(30, 8, 22050, signal.getSignal());
         tp1.iterate();
         Graphe g1 = new Graphe(energies, 8, "Energie du signal en fonction du temps", "");
         System.out.println("energies : " + energies);
@@ -34,24 +41,15 @@ public class TP1 extends IterateurSignal {
         System.out.println("Length of the signal (in ms) : " + signal.getSignalLength() * 1000 / signal.getSamplingFrequency());
     }
 
-    public TP1(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage) {
-        super(wsize_seconde, stepsize_seconde, frequence_echantillonage);
-        try {
-
-            signal = new SoundSignal();
-            signal.setSignal("test_seg.wav");
-            signal_tab = signal.getSignal();
-            energies = new ArrayList<>();
-
-        } catch (UnsupportedAudioFileException | IOException ex) {
-            Logger.getLogger(TP1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public TP1(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage, short[] sig) {
+        super(wsize_seconde, stepsize_seconde, frequence_echantillonage, sig);
+        energies = new ArrayList<>();
     }
 
     @Override
     public void toIterate(int debut_fenetre_ech, int fin_fenetre_ech, int indice_fenetre) {
 //        System.out.println("indice_f : "+indice_fenetre);
-        energies.add(computeEnergy(debut_fenetre_ech,wsize_ech ));
+        energies.add(computeEnergy(debut_fenetre_ech, wsize_ech));
     }
 
 //    public static double[] signalEnergy(int m,int N){
@@ -79,7 +77,7 @@ public class TP1 extends IterateurSignal {
 //    }
     private double computeEnergy(int instant_echt, int N) {
         double somme = 0.;
-        for (int k = 0; k < N ; k++) {
+        for (int k = 0; k < N; k++) {
             somme += Math.pow(signal_tab[instant_echt + k], 2);
         }
         somme *= (1. / (N + 1.));

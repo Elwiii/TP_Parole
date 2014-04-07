@@ -17,15 +17,23 @@ public class IterateurSignal {
     protected int frequence_echantillonage;
     protected int wsize_ech;
     protected int stepsize_ech;
+    
+//    protected int size_ech;
+//    protected int size_seconde;
 
-    public IterateurSignal(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage) {
+    public IterateurSignal(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage,short[] signal_tab/*,int size_seconde*/) {
+//        this.size_seconde = size_seconde;
+        this.signal_tab = signal_tab;
         this.wsize_seconde = wsize_seconde;
         this.stepsize_seconde = stepsize_seconde;
         this.frequence_echantillonage = frequence_echantillonage;
         wsize_ech = wsize_seconde * frequence_echantillonage / 1000;
         stepsize_ech = stepsize_seconde * frequence_echantillonage / 1000;
+//        size_ech = frequence_echantillonage * size_seconde;
+//        size_ech = signal_tab.length;
     }
 
+    
     /**
      * appelle la fonction toIterate à chaque fenêtre du signal
      * renvoi le nombre de fenêtre du signal
