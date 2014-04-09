@@ -8,11 +8,9 @@ package tp2;
 import Tool.IterateurSignal;
 import Tool.SoundSignal;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import tp1.TP1;
 
 /**
  *
@@ -71,10 +69,20 @@ public class Hamming extends IterateurSignal {
 
         Hamming tp2 = new Hamming(32, 8, 22050, sig);
 
-        ssignal.setSignal(tp2.computeHammingSignal(), 22050);
+        short[] modifHamming = tp2.computeHammingSignal();
+        
+//        for (int i = 0; i < sig.length; i++) {
+//            if (sig[i] != modifHamming[i]) {
+//                System.out.println("sig[" + i + "] + " + sig[i]);
+//                System.out.println("modifHamming[" + i + "] + " + modifHamming[i]);
+//                System.exit(1);
+//            }
+//        }
+        
+        ssignal.setSignal(modifHamming, 22050);
 
         try {
-            ssignal.exportSignal("test_toto.wav", true);
+            ssignal.exportSignal("test_hamming.wav", true);
         } catch (IOException ex) {
             Logger.getLogger(Hamming.class.getName()).log(Level.SEVERE, null, ex);
         }
