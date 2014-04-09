@@ -6,6 +6,7 @@
 package tp2;
 
 import Tool.IterateurSignal;
+import Tool.SignalTool;
 import Tool.SoundSignal;
 import fft.FFT;
 import java.io.IOException;
@@ -20,16 +21,19 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class Fourier extends IterateurSignal {
 
+    private static final int NB_SPECTRE_BRUIT = 5;
     private double[] x;
     private final int fftOrder;
     private final boolean testing_fft;
     private final double[] tmp;
+    private final double[] bruit_amp;
 
     public Fourier(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage, short[] sig, boolean testing) {
         super(wsize_seconde, stepsize_seconde, frequence_echantillonage, sig);
         fftOrder = 1024;
         testing_fft = testing;
         tmp = new double[sig.length];
+        bruit_amp = new double[fftOrder];
     }
 
     @Override
@@ -51,14 +55,30 @@ public class Fourier extends IterateurSignal {
             y = Arrays.copyOf(x, x.length);
         }
 
+        // transformer de fourier de la fenêtre
         fft.transform(x, false);
 
+        // traitement dans le domaine spectral
         if (!testing_fft) {
+            double[] spectreamplitude = SignalTool.spectreamplitude(x, fftOrder);
+            double[] spectrephase = SignalTool.spectrephase(x, fftOrder);
             // transformer le spectre
+            // calcul du bruit (question 8)
+            if (indice_fenetre <= NB_SPECTRE_BRUIT) {
+                int div = indice_fenetre == NB_SPECTRE_BRUIT ? NB_SPECTRE_BRUIT : 1;
+                for (int i = 0; i < bruit_amp.length; i++) {
+                    bruit_amp[i] = (bruit_amp[i] + spectreamplitude[i]) / div;
+                }
+            }
+            // on applique un traitement
+            // todo Q9
+            // on reconstruit le spectre
+            x = SignalTool.spectrereconstruction(spectreamplitude, spectrephase, fftOrder);
         } else {
             //nothing to do
         }
 
+        // transformé inverse de la fenêtre modifiée
         fft.transform(x, true);
 
         // on reconstruit le signal en temporel
@@ -97,7 +117,9 @@ public class Fourier extends IterateurSignal {
 
         short[] modifHamming = hamming.computeHammingSignal();
 
-        Fourier test = new Fourier(32, 8, 22050, modifHamming, true);
+        boolean testing = true;
+
+        Fourier test = new Fourier(32, 8, 22050, modifHamming, testing);
 
         short[] modifFFT = test.compute();
 

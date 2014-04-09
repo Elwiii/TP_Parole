@@ -19,7 +19,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  *
  * @author nikolai
  */
-public class TP1 extends IterateurSignal {
+public class Energie extends IterateurSignal {
 
     private static SoundSignal signal;
     private static ArrayList<Double> energies;
@@ -30,9 +30,9 @@ public class TP1 extends IterateurSignal {
         try {
             signal.setSignal("test_seg.wav");
         } catch (UnsupportedAudioFileException | IOException ex) {
-            Logger.getLogger(TP1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Energie.class.getName()).log(Level.SEVERE, null, ex);
         }
-        TP1 tp1 = new TP1(30, 8, 22050, signal.getSignal());
+        Energie tp1 = new Energie(30, 8, 22050, signal.getSignal());
         tp1.iterate();
         Graphe g1 = new Graphe(energies, 8, "Energie du signal en fonction du temps", "");
         System.out.println("energies : " + energies);
@@ -41,7 +41,7 @@ public class TP1 extends IterateurSignal {
         System.out.println("Length of the signal (in ms) : " + signal.getSignalLength() * 1000 / signal.getSamplingFrequency());
     }
 
-    public TP1(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage, short[] sig) {
+    public Energie(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage, short[] sig) {
         super(wsize_seconde, stepsize_seconde, frequence_echantillonage, sig);
         energies = new ArrayList<>();
     }
