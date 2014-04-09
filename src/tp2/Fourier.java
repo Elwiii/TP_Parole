@@ -125,7 +125,7 @@ public class Fourier extends IterateurSignal {
 
         boolean testing = true;
 
-        Fourier test = new Fourier(32, 8, 22050, modifHamming, true,2,1,0);
+        Fourier test = new Fourier(32, 8, 22050, modifHamming, testing,-666,-666,-666);
 
         short[] modifFFT = test.compute();
 
