@@ -65,4 +65,26 @@ public class SignalTool {
         }
         return spectre;
     }
+
+    /**
+     * Question 9 on soustrait au spectre d’amplitude le spectre de l’estimation
+     * du bruit.
+     *
+     * @param spectre_amplitude
+     * @param spectre_bruit
+     * @param fftorder
+     * @param alpha
+     * @param beta
+     * @param gamma
+     * @return
+     */
+    public static double[] soustractionspetrale(double[] spectre_amplitude, double[] spectre_bruit, int fftorder, double alpha, double beta, double gamma) {
+        double[] soustration = new double[fftorder];
+        for (int k = 0; k < fftorder; k++) {
+            double value = Math.pow(Math.pow(spectre_amplitude[k], alpha) - beta * Math.pow(spectre_bruit[k], alpha), 1. / alpha);
+            soustration[k] = Math.abs(value) < 0.0001 ? gamma * spectre_bruit[k] : value;
+        }
+        return soustration;
+    }
+
 }

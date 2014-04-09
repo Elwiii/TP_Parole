@@ -27,13 +27,19 @@ public class Fourier extends IterateurSignal {
     private final boolean testing_fft;
     private final double[] tmp;
     private final double[] bruit_amp;
+    private final double alpha;
+    private final double beta;
+    private final double gamma;
 
-    public Fourier(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage, short[] sig, boolean testing) {
+    public Fourier(int wsize_seconde, int stepsize_seconde, int frequence_echantillonage, short[] sig, boolean testing, double alpha, double beta, double gamma) {
         super(wsize_seconde, stepsize_seconde, frequence_echantillonage, sig);
         fftOrder = 1024;
         testing_fft = testing;
         tmp = new double[sig.length];
         bruit_amp = new double[fftOrder];
+        this.alpha = alpha;
+        this.beta = beta;
+        this.gamma = gamma;
     }
 
     @Override
@@ -70,8 +76,8 @@ public class Fourier extends IterateurSignal {
                     bruit_amp[i] = (bruit_amp[i] + spectreamplitude[i]) / div;
                 }
             }
-            // on applique un traitement
-            // todo Q9
+            // on applique la soustraction spectral
+            spectreamplitude = SignalTool.soustractionspetrale(spectreamplitude, bruit_amp, fftOrder, alpha, beta, gamma);
             // on reconstruit le spectre
             x = SignalTool.spectrereconstruction(spectreamplitude, spectrephase, fftOrder);
         } else {
@@ -119,7 +125,7 @@ public class Fourier extends IterateurSignal {
 
         boolean testing = true;
 
-        Fourier test = new Fourier(32, 8, 22050, modifHamming, testing);
+        Fourier test = new Fourier(32, 8, 22050, modifHamming, /*testing*/false,2,1,0);
 
         short[] modifFFT = test.compute();
 
