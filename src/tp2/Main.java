@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         SoundSignal ssignal = new SoundSignal();
         try {
-            ssignal.setSignal("test_seg.wav");
+            ssignal.setSignal("signal_avec_bruit_0dB.wav");
         } catch (UnsupportedAudioFileException | IOException ex) {
             Logger.getLogger(Hamming.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -37,7 +37,7 @@ public class Main {
         ssignal.setSignal(modifFFT, 22050);
 
         try {
-            ssignal.exportSignal("soustraction.wav", true);
+            ssignal.exportSignal("soustraction_signal_avec_bruit_0dB.wav", true);
         } catch (IOException ex) {
             Logger.getLogger(Hamming.class.getName()).log(Level.SEVERE, null, ex);
         }

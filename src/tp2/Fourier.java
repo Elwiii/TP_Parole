@@ -76,6 +76,11 @@ public class Fourier extends IterateurSignal {
                     bruit_amp[i] = (bruit_amp[i] + spectreamplitude[i]) / div;
                 }
             }
+//            for (int i = 0; i <=NB_SPECTRE_BRUIT; i++) {
+//                //int div = i == NB_SPECTRE_BRUIT ? NB_SPECTRE_BRUIT+1 : 1;
+//                bruit_amp[i] = (bruit_amp[i] + spectreamplitude[i]); /// div;
+//            }
+            
             // on applique la soustraction spectral
             spectreamplitude = SignalTool.soustractionspetrale(spectreamplitude, bruit_amp, fftOrder, alpha, beta, gamma);
             // on reconstruit le spectre
