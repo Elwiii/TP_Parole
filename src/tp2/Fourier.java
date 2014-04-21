@@ -77,8 +77,8 @@ public class Fourier extends IterateurSignal {
         if (!testing_fft) {
             double[] spectreamplitude = SignalTool.spectreamplitude(x, fftOrder);
             double[] spectrephase = SignalTool.spectrephase(x, fftOrder);
-            // transformer le spectre
-            // calcul du bruit (question 8)
+
+            // calcul de l'amplitude du  bruit (question 8)
             if (indice_fenetre <= NB_SPECTRE_BRUIT) {
                 int div = indice_fenetre == NB_SPECTRE_BRUIT ? NB_SPECTRE_BRUIT : 1;
                 for (int i = 0; i < bruit_amp.length; i++) {
@@ -128,7 +128,11 @@ public class Fourier extends IterateurSignal {
         for (int i = 0; i < tmp.length; i++) {
             sig_out[i] = (short) Math.round(tmp[i]/*/2.16*/);
         }
-
+        
+        
+        //sig_out[1] = 10000;
+        
+        
         /**
          * si on test, on vérifie que la fft+fftinverse n'a pas modifié le
          * signal d'entrée

@@ -1,0 +1,23 @@
+Veuillez trouver le depot git à l'adresse suivante : 
+
+https://github.com/Elwiii/TP_Parole
+
+Pour lancer le traitement, il suffit de lancer le fichier main.
+
+Il y a un bug que l'on arrive pas à résoudre :  lorsque l'on applique hamming puis
+fourier et fourier inverse au signal (sans aucune autre forme de traitement), 
+le signal n'est pas modifié et pour les fichiers sons de tests sont les mêmes 
+qu'en entrée, sauf pour un fichier :
+
+"signal_avec_bruit_0dB.wav".
+
+Du coup soustraction semble bien fonctionner pour tout les fichiers sauf ce dernier
+, avec les paramètres alpha = 2 beta = 30 gamma = 0.
+
+Vous pouvez lancer les fichier hamming et fourier afin de tester ces deux traitements.
+
+Veuillez trouver les fichiers resultants sour le dossier "sons" .
+
+Cordialement,
+
+Carrara Nicolas et Vogel Thomas
