@@ -61,7 +61,7 @@ public class SignalTool {
         double[] spectre = new double[2 * fftorder];
         for (int i = 0; i < fftorder; i++) {
             spectre[i * 2] = spectre_amplitude[i] * Math.cos(spectre_phase[i]);
-            spectre[i*2 + 1] = spectre_amplitude[i] * Math.sin(spectre_phase[i]);
+            spectre[i * 2 + 1] = spectre_amplitude[i] * Math.sin(spectre_phase[i]);
         }
         return spectre;
     }
@@ -81,8 +81,8 @@ public class SignalTool {
     public static double[] soustractionspetrale(double[] spectre_amplitude, double[] spectre_bruit, int fftorder, double alpha, double beta, double gamma) {
         double[] soustration = new double[spectre_amplitude.length];
         for (int k = 0; k < soustration.length; k++) {
-            double value = Math.pow(Math.pow(spectre_amplitude[k], alpha) - beta * Math.pow(spectre_bruit[k], alpha), 1. / alpha);
-            soustration[k] = value < 0.0001 ? gamma * spectre_bruit[k] : value;
+            double difference = Math.pow(spectre_amplitude[k], alpha) - beta * Math.pow(spectre_bruit[k], alpha);
+            soustration[k] = difference < 0.001 ? gamma * spectre_bruit[k] : Math.pow(difference,1./alpha);
         }
         return soustration;
     }

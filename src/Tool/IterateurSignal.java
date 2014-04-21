@@ -11,7 +11,7 @@ package Tool;
  */
 public class IterateurSignal {
 
-    protected short[] signal_tab;
+    protected final short[] signal_tab;
     protected int wsize_seconde;
     protected int stepsize_seconde;
     protected int frequence_echantillonage;
